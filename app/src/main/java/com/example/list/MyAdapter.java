@@ -1,14 +1,24 @@
 package com.example.list;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    Context context ;
+
+    public MyAdapter(MainActivity mainActivity) {
+        context = mainActivity;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -21,32 +31,34 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bind(position);
+        String user = MainActivity.str.get(position);
+        String[] str = user.split("\n");
+
+        holder.firstTextView.setText(str[0]);
+        holder.secondTextView.setText(str[1]);
     }
 
     @Override
     public int getItemCount() {
-        return 100;
+        return MainActivity.str.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView firstTextView, secondTextView;
+        public ImageView imageView;
 
-        private static int counter = 1;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             firstTextView = itemView.findViewById(R.id.firstText);
             secondTextView = itemView.findViewById(R.id.secondText);
-
-            secondTextView.setText(String.valueOf(counter));
-            counter++;
+            imageView = itemView.findViewById(R.id.imageView);
 
         }
 
-        public void bind(int index) {
-            firstTextView.setText(String.valueOf(index));
+        public void bind() {
+
         }
     }
 
